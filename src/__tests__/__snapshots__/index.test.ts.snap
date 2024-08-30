@@ -25,8 +25,8 @@ exports[`Sweetest > should show an error indication when an inner suite have fai
 "❌ Test Suite
 	✅ Test Case 1
 	❌ Inner Test Suite
-		✅ Test Case 3
-		❌ Test Case 4
+		✅ Test Case 2
+		❌ Test Case 3
 			 Expected \`1\` to be \`2\`"
 `;
 

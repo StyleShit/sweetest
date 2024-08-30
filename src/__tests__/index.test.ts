@@ -135,11 +135,11 @@ describe('Sweetest', () => {
 			});
 
 			sweetest.describe('Inner Test Suite', () => {
-				sweetest.it('Test Case 3', () => {
+				sweetest.it('Test Case 2', () => {
 					sweetest.expect(1).toBe(1);
 				});
 
-				sweetest.it('Test Case 4', () => {
+				sweetest.it('Test Case 3', () => {
 					sweetest.expect(1).toBe(2);
 				});
 			});
