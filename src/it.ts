@@ -8,12 +8,15 @@ export function it(name: string, cb: () => void) {
 		throw new Error('it() must be called within a describe() block');
 	}
 
+	const indent = '\t'.repeat(context.depth);
+
 	try {
 		cb();
-		context.addSuccessfulTest(name);
+		context.addOutput(`${indent}\t✅ ${name}`);
 	} catch (error: unknown) {
 		if (error instanceof AssertionError) {
-			context.addFailedTest(name, error);
+			context.setFailed();
+			context.addOutput(`${indent}\t❌ ${name}`);
 		} else {
 			throw error;
 		}

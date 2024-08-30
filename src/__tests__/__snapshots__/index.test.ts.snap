@@ -5,25 +5,22 @@ exports[`Sweetest > should print the \`describe\` and \`it\` names and statuses 
 Inside test case 2
 Inside test case 3
 Inside test case 4
-🟢 Test Suite
+✅ Test Suite
 	✅ Test Case 1
 	✅ Test Case 2
-	🟢 Inner Test Suite
+	✅ Inner Test Suite
 		✅ Test Case 3
 		✅ Test Case 4"
 `;
 
 exports[`Sweetest > should show a warning sign when some of the tests in a suite have failed 1`] = `
-"🟠 Test Suite
-	✅ Test Case 2
+"❌ Test Suite
 	❌ Test Case 1
-		Expected \`1\` to be \`2\`"
+	✅ Test Case 2"
 `;
 
 exports[`Sweetest > should show an error sign when all of the tests in a suite have failed 1`] = `
-"🔴 Test Suite
+"❌ Test Suite
 	❌ Test Case 1
-		Expected \`1\` to be \`2\`
-	❌ Test Case 2
-		Expected \`1\` to be \`3\`"
+	❌ Test Case 2"
 `;
