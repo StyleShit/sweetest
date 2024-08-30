@@ -12,9 +12,7 @@ describe('Sweetest', () => {
 
 	it('should print the `describe` and `it` names and statuses properly', () => {
 		// Arrange.
-		const consoleSpy = vi
-			.spyOn(console, 'log')
-			.mockImplementation(() => {});
+		const { getOutput } = mockConsole();
 
 		// Act.
 		sweetest.describe('Test Suite', () => {
@@ -40,18 +38,12 @@ describe('Sweetest', () => {
 		vi.runAllTimers();
 
 		// Assert.
-		const loggedLines = consoleSpy.mock.calls.map(
-			(args) => args[0] as string,
-		);
-
-		expect(loggedLines.join('\n')).toMatchSnapshot();
+		expect(getOutput()).toMatchSnapshot();
 	});
 
 	it('should throw an error when `it` is called outside of `describe`', () => {
 		// Arrange.
-		const consoleSpy = vi
-			.spyOn(console, 'log')
-			.mockImplementation(() => {});
+		const { consoleSpy } = mockConsole();
 
 		// Act.
 		const test = () => {
@@ -70,9 +62,7 @@ describe('Sweetest', () => {
 
 	it('should show an error indication when some of the tests in a suite have failed', () => {
 		// Arrange.
-		const consoleSpy = vi
-			.spyOn(console, 'log')
-			.mockImplementation(() => {});
+		const { getOutput } = mockConsole();
 
 		// Act.
 		sweetest.describe('Test Suite', () => {
@@ -88,18 +78,12 @@ describe('Sweetest', () => {
 		vi.runAllTimers();
 
 		// Assert.
-		const loggedLines = consoleSpy.mock.calls.map(
-			(args) => args[0] as string,
-		);
-
-		expect(loggedLines.join('\n')).toMatchSnapshot();
+		expect(getOutput()).toMatchSnapshot();
 	});
 
 	it('should show an error indication when all of the tests in a suite have failed', () => {
 		// Arrange.
-		const consoleSpy = vi
-			.spyOn(console, 'log')
-			.mockImplementation(() => {});
+		const { getOutput } = mockConsole();
 
 		// Act.
 		sweetest.describe('Test Suite', () => {
@@ -115,18 +99,12 @@ describe('Sweetest', () => {
 		vi.runAllTimers();
 
 		// Assert.
-		const loggedLines = consoleSpy.mock.calls.map(
-			(args) => args[0] as string,
-		);
-
-		expect(loggedLines.join('\n')).toMatchSnapshot();
+		expect(getOutput()).toMatchSnapshot();
 	});
 
 	it('should show an error indication when an inner suite have failed', () => {
 		// Arrange.
-		const consoleSpy = vi
-			.spyOn(console, 'log')
-			.mockImplementation(() => {});
+		const { getOutput } = mockConsole();
 
 		// Act.
 		sweetest.describe('Test Suite', () => {
@@ -148,11 +126,7 @@ describe('Sweetest', () => {
 		vi.runAllTimers();
 
 		// Assert.
-		const loggedLines = consoleSpy.mock.calls.map(
-			(args) => args[0] as string,
-		);
-
-		expect(loggedLines.join('\n')).toMatchSnapshot();
+		expect(getOutput()).toMatchSnapshot();
 	});
 
 	it('should support custom matchers', () => {
@@ -178,3 +152,13 @@ describe('Sweetest', () => {
 		}).toThrow(new sweetest.AssertionError('Expected `2` to be `1`'));
 	});
 });
+
+function mockConsole() {
+	const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+	return {
+		consoleSpy,
+		getOutput: () =>
+			consoleSpy.mock.calls.map((args) => String(args[0])).join('\n'),
+	};
+}
