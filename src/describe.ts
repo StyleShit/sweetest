@@ -25,6 +25,8 @@ export function describe(name: string, cb: () => void) {
 		},
 		setFailed: () => {
 			failed = true;
+
+			parentContext?.setFailed();
 		},
 	};
 

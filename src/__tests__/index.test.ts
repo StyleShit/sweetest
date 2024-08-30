@@ -68,7 +68,7 @@ describe('Sweetest', () => {
 		);
 	});
 
-	it('should show a warning sign when some of the tests in a suite have failed', () => {
+	it('should show an error indication when some of the tests in a suite have failed', () => {
 		// Arrange.
 		const consoleSpy = vi
 			.spyOn(console, 'log')
@@ -95,7 +95,7 @@ describe('Sweetest', () => {
 		expect(loggedLines.join('\n')).toMatchSnapshot();
 	});
 
-	it('should show an error sign when all of the tests in a suite have failed', () => {
+	it('should show an error indication when all of the tests in a suite have failed', () => {
 		// Arrange.
 		const consoleSpy = vi
 			.spyOn(console, 'log')
@@ -109,6 +109,39 @@ describe('Sweetest', () => {
 
 			sweetest.it('Test Case 2', () => {
 				sweetest.expect(1).toBe(3);
+			});
+		});
+
+		vi.runAllTimers();
+
+		// Assert.
+		const loggedLines = consoleSpy.mock.calls.map(
+			(args) => args[0] as string,
+		);
+
+		expect(loggedLines.join('\n')).toMatchSnapshot();
+	});
+
+	it('should show an error indication when an inner suite have failed', () => {
+		// Arrange.
+		const consoleSpy = vi
+			.spyOn(console, 'log')
+			.mockImplementation(() => {});
+
+		// Act.
+		sweetest.describe('Test Suite', () => {
+			sweetest.it('Test Case 1', () => {
+				sweetest.expect(1).toBe(1);
+			});
+
+			sweetest.describe('Inner Test Suite', () => {
+				sweetest.it('Test Case 3', () => {
+					sweetest.expect(1).toBe(1);
+				});
+
+				sweetest.it('Test Case 4', () => {
+					sweetest.expect(1).toBe(2);
+				});
 			});
 		});
 
