@@ -1,15 +1,7 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import * as sweetest from '..';
 
 describe('Sweetest', () => {
-	beforeAll(() => {
-		vi.useFakeTimers();
-	});
-
-	afterAll(() => {
-		vi.useRealTimers();
-	});
-
 	it('should print the `describe` and `it` names and statuses properly', () => {
 		// Arrange.
 		const { getOutput } = mockConsole();
@@ -34,8 +26,6 @@ describe('Sweetest', () => {
 				});
 			});
 		});
-
-		vi.runAllTimers();
 
 		// Assert.
 		expect(getOutput()).toMatchSnapshot();
@@ -75,8 +65,6 @@ describe('Sweetest', () => {
 			});
 		});
 
-		vi.runAllTimers();
-
 		// Assert.
 		expect(getOutput()).toMatchSnapshot();
 	});
@@ -95,8 +83,6 @@ describe('Sweetest', () => {
 				sweetest.expect(1).toBe(3);
 			});
 		});
-
-		vi.runAllTimers();
 
 		// Assert.
 		expect(getOutput()).toMatchSnapshot();
@@ -122,8 +108,6 @@ describe('Sweetest', () => {
 				});
 			});
 		});
-
-		vi.runAllTimers();
 
 		// Assert.
 		expect(getOutput()).toMatchSnapshot();
