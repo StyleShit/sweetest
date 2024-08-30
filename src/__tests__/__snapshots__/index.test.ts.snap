@@ -16,7 +16,9 @@ Inside test case 4
 exports[`Sweetest > should show an error indication when all of the tests in a suite have failed 1`] = `
 "❌ Test Suite
 	❌ Test Case 1
-	❌ Test Case 2"
+		 Expected \`1\` to be \`2\`
+	❌ Test Case 2
+		 Expected \`1\` to be \`3\`"
 `;
 
 exports[`Sweetest > should show an error indication when an inner suite have failed 1`] = `
@@ -24,11 +26,13 @@ exports[`Sweetest > should show an error indication when an inner suite have fai
 	✅ Test Case 1
 	❌ Inner Test Suite
 		✅ Test Case 3
-		❌ Test Case 4"
+		❌ Test Case 4
+			 Expected \`1\` to be \`2\`"
 `;
 
 exports[`Sweetest > should show an error indication when some of the tests in a suite have failed 1`] = `
 "❌ Test Suite
 	❌ Test Case 1
+		 Expected \`1\` to be \`2\`
 	✅ Test Case 2"
 `;

@@ -17,6 +17,7 @@ export function it(name: string, cb: () => void) {
 		if (error instanceof AssertionError) {
 			context.setFailed();
 			context.addOutput(`${indent}\t❌ ${name}`);
+			context.addOutput(`${indent}\t\t ${error.message}`);
 		} else {
 			throw error;
 		}
