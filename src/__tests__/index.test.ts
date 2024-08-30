@@ -81,7 +81,7 @@ describe('Sweetest', () => {
 			});
 
 			sweetest.it('Test Case 2', () => {
-				sweetest.expect(1).toBeOne();
+				sweetest.expect(null).toBeNull();
 			});
 		});
 
@@ -120,5 +120,28 @@ describe('Sweetest', () => {
 		);
 
 		expect(loggedLines.join('\n')).toMatchSnapshot();
+	});
+
+	it('should support custom matchers', () => {
+		// Arrange.
+		const toBeOne: sweetest.Matcher = (value) => {
+			if (value !== 1) {
+				throw new sweetest.AssertionError(
+					`Expected \`${String(value)}\` to be \`1\``,
+				);
+			}
+		};
+
+		// Act.
+		sweetest.addMatcher('toBeOne', toBeOne);
+
+		type ExtendedMatchers = ReturnType<typeof sweetest.expect> & {
+			toBeOne: () => void;
+		};
+
+		// Assert.
+		expect(() => {
+			(sweetest.expect(2) as ExtendedMatchers).toBeOne();
+		}).toThrow(new sweetest.AssertionError('Expected `2` to be `1`'));
 	});
 });
