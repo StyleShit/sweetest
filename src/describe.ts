@@ -13,10 +13,10 @@ type Context = {
 	hooks: HooksRegistry;
 };
 
-export const testContext = createContext<Context | null>(null);
+export const TestContext = createContext<Context | null>(null);
 
 export function describe(name: string, cb: () => void) {
-	const parentContext = testContext.use();
+	const parentContext = TestContext.use();
 
 	const context: Context = {
 		name,
@@ -27,7 +27,7 @@ export function describe(name: string, cb: () => void) {
 		depth: parentContext ? parentContext.depth + 1 : 0,
 	};
 
-	testContext.provide(context, cb);
+	TestContext.provide(context, cb);
 
 	if (parentContext) {
 		parentContext.queue.enqueueSuite(name, runSuite);

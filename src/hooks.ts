@@ -1,4 +1,4 @@
-import { testContext } from './describe';
+import { TestContext } from './describe';
 
 export type HookType = 'beforeAll' | 'beforeEach' | 'afterEach' | 'afterAll';
 
@@ -36,7 +36,7 @@ export function createHooksRegistry(): HooksRegistry {
 
 function createHook(type: HookType) {
 	return (cb: () => void) => {
-		const context = testContext.use();
+		const context = TestContext.use();
 
 		if (!context) {
 			throw new Error(
