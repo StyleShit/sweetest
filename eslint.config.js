@@ -25,4 +25,12 @@ export default tseslint.config(
 			'**/__snapshots__/**',
 		],
 	},
+	{
+		rules: {
+			// We're gonna need some of those...
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unsafe-return': 'off',
+			'@typescript-eslint/no-unsafe-argument': 'off',
+		},
+	},
 );

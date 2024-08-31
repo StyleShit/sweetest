@@ -1,16 +1,16 @@
 import { matchers, type Matchers } from './matchers';
 
-type NormalizeMatchers<TValue> = {
+type NormalizedMatchers = {
 	[K in keyof Matchers]: Parameters<Matchers[K]>['length'] extends 1
 		? () => void
-		: (expected: TValue) => void;
+		: (expected: Parameters<Matchers[K]>[1]) => void;
 };
 
-export function expect<TValue>(value: TValue): NormalizeMatchers<TValue> {
+export function expect(value: any): NormalizedMatchers {
 	const _matchers = Object.entries(matchers).map(([name, matcher]) => {
 		return [
 			name,
-			(expected: TValue) => {
+			(expected: any) => {
 				matcher(value, expected);
 			},
 		] as const;

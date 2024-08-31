@@ -36,3 +36,13 @@ exports[`Sweetest > should show an error indication when some of the tests in a 
 		 Expected \`1\` to be \`2\`
 	✅ Test Case 2"
 `;
+
+exports[`Sweetest > should support mock functions call assertions 1`] = `
+"❌ Test Suite
+	✅ Should pass -- toHaveBeenCalled
+	❌ Should fail -- toHaveBeenCalled
+		 Expected mock function to be called
+	✅ Should pass -- toHaveBeenCalledTimes
+	❌ Should fail -- toHaveBeenCalledTimes
+		 Expected mock function to be called 2 times, but it was called once"
+`;

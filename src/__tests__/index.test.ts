@@ -267,6 +267,58 @@ describe('Sweetest', () => {
 			(sweetest.expect(2) as ExtendedMatchers).toBeOne();
 		}).toThrow(new sweetest.AssertionError('Expected `2` to be `1`'));
 	});
+
+	it('should support mock functions implementation', () => {
+		// Arrange.
+		const mockFn1 = sweetest.sw.fn();
+		const mockFn2 = sweetest.sw.fn((count: number) => 41 + count);
+
+		// Assert.
+		expect(mockFn1()).toBeNull();
+		expect(mockFn2(1)).toBe(42);
+	});
+
+	it('should support mock functions call assertions', () => {
+		// Arrange.
+		const { getOutput } = mockConsole();
+
+		// Act.
+		sweetest.describe('Test Suite', () => {
+			sweetest.it('Should pass -- toHaveBeenCalled', () => {
+				const mockFn = sweetest.sw.fn();
+
+				mockFn();
+
+				sweetest.expect(mockFn).toHaveBeenCalled();
+			});
+
+			sweetest.it('Should fail -- toHaveBeenCalled', () => {
+				const mockFn = sweetest.sw.fn();
+
+				sweetest.expect(mockFn).toHaveBeenCalled();
+			});
+
+			sweetest.it('Should pass -- toHaveBeenCalledTimes', () => {
+				const mockFn = sweetest.sw.fn();
+
+				mockFn();
+				mockFn();
+
+				sweetest.expect(mockFn).toHaveBeenCalledTimes(2);
+			});
+
+			sweetest.it('Should fail -- toHaveBeenCalledTimes', () => {
+				const mockFn = sweetest.sw.fn();
+
+				mockFn();
+
+				sweetest.expect(mockFn).toHaveBeenCalledTimes(2);
+			});
+		});
+
+		// Assert.
+		expect(getOutput()).toMatchSnapshot();
+	});
 });
 
 function mockConsole() {
