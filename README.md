@@ -70,3 +70,33 @@ declare module 'sweetest' {
   }
 }
 ```
+
+## Hooks
+
+Same as in Jest, you can use hooks to run code before and after each test, or before and after each suite:
+
+```TS
+import { describe, it, beforeEach, afterEach, beforeAll, afterAll } from 'sweetest';
+
+describe('My test suite', () => {
+  beforeAll(() => {
+    console.log('Before all tests');
+  });
+
+  beforeEach(() => {
+    console.log('Before each test');
+  });
+
+  afterEach(() => {
+    console.log('After each test');
+  });
+
+  afterAll(() => {
+    console.log('After all tests');
+  });
+
+  it('should pass', () => {
+    expect(1 + 1).toBe(2);
+  });
+});
+```
