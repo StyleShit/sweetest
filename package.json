@@ -1,7 +1,7 @@
 {
 	"name": "sweetest",
 	"description": "Simple testing framework inspired by Jest",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": "StyleShit",
 	"license": "MIT",
 	"repository": {
