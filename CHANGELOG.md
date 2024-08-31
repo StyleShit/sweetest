@@ -1,5 +1,11 @@
 # sweetest
 
+## 0.0.2
+
+### Patch Changes
+
+- e7fab17: Fix documentation indentation
+
 ## 0.0.1
 
 ### Patch Changes
