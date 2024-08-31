@@ -33,10 +33,10 @@ The output will be something like this:
 
 ```
 ❌ My test suite
-	✅ should pass
-    ❌ should fail
-    ✅ Nested suite
-        ✅ should pass
+  ✅ should pass
+  ❌ should fail
+  ✅ Nested suite
+    ✅ should pass
 ```
 
 ## Matchers
