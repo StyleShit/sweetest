@@ -113,6 +113,17 @@ describe('Sweetest', () => {
 		expect(getOutput()).toMatchSnapshot();
 	});
 
+	it('should rethrow errors that were thrown in the a case', () => {
+		// Act & Assert.
+		expect(() => {
+			sweetest.describe('Test Suite', () => {
+				sweetest.it('Test Case', () => {
+					throw new Error('Test error');
+				});
+			});
+		}).toThrow(new Error('Test error'));
+	});
+
 	it('should run lifecycle hooks in order', () => {
 		// Arrange.
 		const calls: string[] = [];
