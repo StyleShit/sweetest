@@ -100,3 +100,26 @@ describe('My test suite', () => {
   });
 });
 ```
+
+## Mocks
+
+You can also create mock functions using the `sw.fn` function, and assert if they were called using the `toHaveBeenCalled` and `toHaveBeenCalledTimes` matchers:
+
+```TS
+import { describe, it, expect, sw } from 'sweetest';
+
+describe('My test suite', () => {
+  it('should call the mock function', () => {
+    const mock = sw.fn((count: number) => {
+      return count * 2;
+    });
+
+    mock(1);
+    mock(2);
+    mock(3);
+
+    expect(mock).toHaveBeenCalled();
+    expect(mock).toHaveBeenCalledTimes(3);
+  });
+});
+```
