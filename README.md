@@ -103,7 +103,8 @@ describe('My test suite', () => {
 
 ## Mocks
 
-You can also create mock functions using the `sw.fn` function, and assert if they were called using the `toHaveBeenCalled` and `toHaveBeenCalledTimes` matchers:
+You can also create mock functions using the `sw.fn` function, and assert if they were called using the `toHaveBeenCalled`, `toHaveBeenCalledTimes`
+and `toHaveBeenCalledWith` matchers:
 
 ```TS
 import { describe, it, expect, sw } from 'sweetest';
@@ -120,6 +121,7 @@ describe('My test suite', () => {
 
     expect(mock).toHaveBeenCalled();
     expect(mock).toHaveBeenCalledTimes(3);
+    expect(mock).toHaveBeenCalledWith(1);
   });
 });
 ```

@@ -314,6 +314,22 @@ describe('Sweetest', () => {
 
 				sweetest.expect(mockFn).toHaveBeenCalledTimes(2);
 			});
+
+			sweetest.it('Should pass -- toHaveBeenCalledWith', () => {
+				const mockFn = sweetest.sw.fn();
+
+				mockFn(1, 2, 3);
+
+				sweetest.expect(mockFn).toHaveBeenCalledWith([1, 2, 3]);
+			});
+
+			sweetest.it('Should fail -- toHaveBeenCalledWith', () => {
+				const mockFn = sweetest.sw.fn();
+
+				mockFn(null);
+
+				sweetest.expect(mockFn).toHaveBeenCalledWith([1, 2, 3]);
+			});
 		});
 
 		// Assert.

@@ -44,5 +44,8 @@ exports[`Sweetest > should support mock functions call assertions 1`] = `
 		 Expected mock function to be called
 	✅ Should pass -- toHaveBeenCalledTimes
 	❌ Should fail -- toHaveBeenCalledTimes
-		 Expected mock function to be called 2 times, but it was called once"
+		 Expected mock function to be called 2 times, but it was called once
+	✅ Should pass -- toHaveBeenCalledWith
+	❌ Should fail -- toHaveBeenCalledWith
+		 Expected mock function to be called with 1, 2, 3"
 `;

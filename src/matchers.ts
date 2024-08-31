@@ -7,6 +7,7 @@ export interface Matchers extends Record<string, Matcher> {
 	toBeNull: (value: unknown) => void;
 	toHaveBeenCalled: (value: MockFn) => void;
 	toHaveBeenCalledTimes: (value: MockFn, expected: number) => void;
+	toHaveBeenCalledWith: (value: MockFn, expected: any[]) => void;
 }
 
 export type Matcher = (value: any, expected?: any) => void;
@@ -43,6 +44,24 @@ export const matchers = {
 
 			throw new AssertionError(
 				`Expected mock function to be called ${times}, but it was called ${called}`,
+			);
+		}
+	},
+
+	toHaveBeenCalledWith: (value, expected) => {
+		const calls = value.calls;
+
+		const hasBeenCalledWith = calls.some((call) => {
+			if (call.length !== expected.length) {
+				return false;
+			}
+
+			return call.every((arg, index) => arg === expected[index]);
+		});
+
+		if (!hasBeenCalledWith) {
+			throw new AssertionError(
+				`Expected mock function to be called with ${expected.join(', ')}`,
 			);
 		}
 	},
