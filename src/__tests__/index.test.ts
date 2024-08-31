@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import * as sweetest from '..';
 
 describe('Sweetest', () => {
-	it('should print the `describe` and `it` names and statuses properly', () => {
+	it('should print the `describe` and `it` names and statuses in order', () => {
 		// Arrange.
 		const { getOutput } = mockConsole();
 
@@ -112,6 +112,138 @@ describe('Sweetest', () => {
 		// Assert.
 		expect(getOutput()).toMatchSnapshot();
 	});
+
+	it('should run lifecycle hooks in order', () => {
+		// Arrange.
+		const calls: string[] = [];
+
+		// Act.
+		sweetest.describe('Test Suite', () => {
+			sweetest.beforeAll(() => {
+				calls.push('beforeAll-outer');
+			});
+
+			sweetest.beforeEach(() => {
+				calls.push('beforeEach-outer');
+			});
+
+			sweetest.afterEach(() => {
+				calls.push('afterEach-outer');
+			});
+
+			sweetest.afterAll(() => {
+				calls.push('afterAll-outer');
+			});
+
+			sweetest.it('Test Case 1', () => {
+				calls.push('test-1-outer');
+			});
+
+			sweetest.it('Test Case 2', () => {
+				calls.push('test-2-outer');
+			});
+
+			sweetest.describe('Inner Test Suite', () => {
+				sweetest.beforeAll(() => {
+					calls.push('beforeAll-inner');
+				});
+
+				sweetest.beforeEach(() => {
+					calls.push('beforeEach-inner');
+				});
+
+				sweetest.afterEach(() => {
+					calls.push('afterEach-inner');
+				});
+
+				sweetest.afterAll(() => {
+					calls.push('afterAll-inner');
+				});
+
+				sweetest.it('Test Case 3', () => {
+					calls.push('test-3-inner');
+				});
+
+				sweetest.it('Test Case 4', () => {
+					calls.push('test-4-inner');
+				});
+			});
+		});
+
+		// Assert.
+		expect(calls).toEqual([
+			// Outer suite -- start
+			'beforeAll-outer',
+
+			// Test 1
+			'beforeEach-outer',
+			'test-1-outer',
+			'afterEach-outer',
+
+			// Test 2
+			'beforeEach-outer',
+			'test-2-outer',
+			'afterEach-outer',
+
+			// Inner suite -- start
+			'beforeAll-inner',
+
+			// Test 3
+			'beforeEach-outer',
+			'beforeEach-inner',
+			'test-3-inner',
+			'afterEach-inner',
+			'afterEach-outer',
+
+			// Test 4
+			'beforeEach-outer',
+			'beforeEach-inner',
+			'test-4-inner',
+			'afterEach-inner',
+			'afterEach-outer',
+
+			// Inner suite -- end
+			'afterAll-inner',
+
+			// Outer suite -- end
+			'afterAll-outer',
+		]);
+	});
+
+	it.each(['beforeAll', 'beforeEach', 'afterEach', 'afterAll'] as const)(
+		'should throw an error when lifecycle hook `%s` is called outside of `describe`',
+		(hook) => {
+			expect(() => {
+				sweetest[hook](() => {});
+			}).toThrow(
+				new Error(`${hook}() must be called within a describe() block`),
+			);
+		},
+	);
+
+	it.each(['beforeAll', 'beforeEach', 'afterEach', 'afterAll'] as const)(
+		'should support only a single callback for lifecycle hook `%s`',
+		(hook) => {
+			// Arrange.
+			const calls: string[] = [];
+
+			// Act.
+			sweetest.describe('Test Suite', () => {
+				sweetest[hook](() => {
+					calls.push('call-1');
+				});
+
+				sweetest[hook](() => {
+					calls.push('call-2');
+				});
+
+				sweetest.it('Test Case', () => {});
+			});
+
+			// Assert.
+			expect(calls).toEqual(['call-2']);
+		},
+	);
 
 	it('should support custom matchers', () => {
 		// Arrange.

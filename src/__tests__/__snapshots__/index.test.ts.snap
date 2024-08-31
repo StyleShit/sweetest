@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Sweetest > should print the \`describe\` and \`it\` names and statuses properly 1`] = `
+exports[`Sweetest > should print the \`describe\` and \`it\` names and statuses in order 1`] = `
 "Inside test case 1
 Inside test case 2
 Inside test case 3
