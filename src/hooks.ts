@@ -3,9 +3,7 @@ import { TestContext } from './describe';
 export type HookType = 'beforeAll' | 'beforeEach' | 'afterEach' | 'afterAll';
 
 export type HooksRegistry = {
-	callbacks: {
-		[Type in HookType]: () => void;
-	};
+	callbacks: Record<HookType, () => void>;
 	set: (type: HookType, cb: () => void) => void;
 	run: (type: HookType) => void;
 };

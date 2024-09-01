@@ -16,7 +16,7 @@ export function expect(value: any): NormalizedMatchers {
 		] as const;
 	});
 
-	return Object.fromEntries(_matchers) as never;
+	return Object.fromEntries(_matchers) as NormalizedMatchers;
 }
 
 export class AssertionError extends Error {}

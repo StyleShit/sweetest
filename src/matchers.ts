@@ -12,7 +12,7 @@ export interface Matchers extends Record<string, Matcher> {
 
 export type Matcher = (value: any, expected?: any) => void;
 
-export const matchers = {
+export const matchers: Matchers = {
 	toBe: (value, expected) => {
 		if (value !== expected) {
 			throw new AssertionError(
@@ -65,7 +65,7 @@ export const matchers = {
 			);
 		}
 	},
-} satisfies Matchers;
+};
 
 export function addMatcher(name: string, matcher: Matcher) {
 	matchers[name as keyof typeof matchers] = matcher;
