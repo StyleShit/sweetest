@@ -1,6 +1,6 @@
 export type Queue = {
-	enqueueTest(name: string, cb: () => void): void;
-	enqueueSuite(name: string, cb: () => void): void;
+	enqueueTest: (name: string, cb: () => void) => void;
+	enqueueSuite: (name: string, cb: () => void) => void;
 	forEach: (cb: (item: QueueItem) => void) => void;
 };
 
@@ -14,13 +14,13 @@ export function createQueue(): Queue {
 	const items: QueueItem[] = [];
 
 	return {
-		enqueueTest(name, cb) {
+		enqueueTest: (name, cb) => {
 			items.push({ type: 'test', name, cb });
 		},
-		enqueueSuite(name, cb) {
+		enqueueSuite: (name, cb) => {
 			items.push({ type: 'suite', name, cb });
 		},
-		forEach(cb) {
+		forEach: (cb) => {
 			items.forEach(cb);
 		},
 	};
